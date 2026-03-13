@@ -12,8 +12,22 @@ def resolve_record(domain: str, rtype: str = "A"):
 def main():
     parser = argparse.ArgumentParser(description="Minimal DNS recon tool")
     parser.add_argument("domain", help="Target domain, e.g. example.com")
-    parser.add_argument("-t", "--type", default="A", help="Record type (A, AAAA, MX, NS, TXT)")
+    parser.add_argument(
+        "-t",
+        "--type",
+        default="A",
+        help="Record type (A, AAAA, MX, NS, TXT)",
+    )
+    parser.add_argument(
+        "-v",
+        "--verbose",
+        action="store_true",
+        help="Show extra information about the query",
+    )
     args = parser.parse_args()
+
+    if args.verbose:
+        print(f"[+] Querying {args.type} records for {args.domain}")
 
     results = resolve_record(args.domain, args.type)
     for r in results:
